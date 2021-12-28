@@ -1,6 +1,6 @@
 # Mandatory configs
 #input: ["in1", "in2"]             # replace values
-input: ["img"]             # replace values
+input: ["img", "bboxes"]             # replace values
 output: ["bboxes", "bbox_scores", "bbox_labels"]  # replace values
 
 # Optional configs depending on node
