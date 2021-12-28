@@ -1,0 +1,8 @@
+nodes:
+- input.live
+- model.mtcnn
+- dabble.fps
+- draw.bbox:
+    show_labels: True
+- draw.legend
+- output.screen
