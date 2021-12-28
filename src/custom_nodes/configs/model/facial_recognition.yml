@@ -1,0 +1,8 @@
+# Mandatory configs
+#input: ["in1", "in2"]             # replace values
+input: ["img"]             # replace values
+output: ["bboxes", "bbox_scores", "bbox_labels"]  # replace values
+
+# Optional configs depending on node
+threshold: 0.5                    # example
+
