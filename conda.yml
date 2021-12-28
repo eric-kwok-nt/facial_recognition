@@ -5,6 +5,8 @@ dependencies:
   - pip=19.0.3
   - numpy=1.17.2 # so we get the mkl libs as well
   - pip:
+    - keras==2.7.0
+    - keras-vggface==0.6
     - opencv-python==4.5.4.60
     - matplotlib==3.5.1
     - pytest==4.6.3
