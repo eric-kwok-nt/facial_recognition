@@ -7,6 +7,17 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def convert(vid_path: str, name: str, save_path: str, min_row=0, max_row=None, min_col=0, max_col=None):
+    """Convert video to images
+
+    Args:
+        vid_path (str): Path to video
+        name (str): Name of person
+        save_path (str): Saving path
+        min_row (int, optional): Cropping height start point. Defaults to 0.
+        max_row ([type], optional): Cropping height end point. Defaults to None.
+        min_col (int, optional): Cropping width start point. Defaults to 0.
+        max_col ([type], optional): Cropping width end point. Defaults to None.
+    """
     assert os.path.exists(vid_path), "Video does not exist!"
     assert os.path.exists(save_path), "Save path does not exist!"
     logger.info("Start conversion...")

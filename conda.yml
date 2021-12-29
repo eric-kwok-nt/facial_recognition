@@ -6,9 +6,12 @@ dependencies:
   - numpy=1.17.2 # so we get the mkl libs as well
   - pip:
     - keras==2.7.0
+    - keras-applications==1.0.8
     - keras-vggface==0.6
     - opencv-python
     - matplotlib==3.5.1
+    - tensorflow==2.7.0
+    - tqdm
     - pytest==4.6.3
     - pylint==2.3.1
     - flask==1.1.1
