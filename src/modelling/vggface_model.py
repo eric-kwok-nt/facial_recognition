@@ -8,6 +8,7 @@ from keras_vggface.vggface import VGGFace
 from keras_vggface.utils import preprocess_input
 from PIL import Image
 import numpy as np
+from src.utils.download_file import download
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -34,23 +35,7 @@ class VGGFace_Model:
     def build_model(self, target_path=None):
         if not os.path.exists(self.model_path):
             assert target_path is not None, "Please input target path for base model to be downloaded"
-            if not os.path.exists(target_path):
-                logger.info(f"{target_path} not found. Creating...")
-                os.makedirs(target_path)
-            file_name = 'base_model.pickle'
-            self.model_path = os.path.join(target_path, file_name)
-            r = requests.get(self.url, stream=True)
-            total = int(r.headers.get('content-length', 0))
-            with open(self.model_path, 'wb') as f, tqdm(
-                    desc=f"Download {file_name} progress",
-                    total=total,
-                    unit='iB',
-                    unit_scale=True,
-                    unit_divisor=1024,
-                    ) as bar:
-                    for data in r.iter_content(chunk_size=1024):
-                        size = f.write(data)
-                        bar.update(size)
+            download(self.url, target_path, 'base_model.pickle')
 
         with open(self.model_path, 'rb') as f:
             base_model = pickle.load(f)
