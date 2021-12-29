@@ -2,6 +2,7 @@
 Node template for creating custom nodes.
 """
 
+import os
 from typing import Any, Dict
 
 from peekingduck.pipeline.nodes.node import AbstractNode
@@ -15,7 +16,10 @@ class Node(AbstractNode):
     """
 
     def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
-        super().__init__(config, node_path=__name__, **kwargs)
+        # super().__init__(config, node_path=__name__, **kwargs)
+        # super().__init__(config, node_path='/Users/ericlee/data/coding/AIAP/team4/src/custom_nodes/configs/model.facial_recognition', **kwargs)
+        node_path = os.path.join(os.getcwd(), 'src/custom_nodes/configs/model.facial_recognition')
+        super().__init__(config, node_path=node_path, **kwargs)
 
         # initialize/load any configs and models here
         # configs can be called by self.<config_name> e.g. self.filepath
@@ -34,3 +38,8 @@ class Node(AbstractNode):
         # result = do_something(inputs["in1"], inputs["in2"])
         # outputs = {"out1": result}
         # return outputs
+
+        print(inputs['bboxes'])
+        result = 'success!'
+        outputs = {"out1": result}
+        return outputs
