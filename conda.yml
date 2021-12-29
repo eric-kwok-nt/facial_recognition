@@ -10,7 +10,9 @@ dependencies:
     - keras-vggface==0.6
     - opencv-python
     - matplotlib==3.5.1
+    - pandas
     - tensorflow==2.7.0
+    - scikit-learn
     - tqdm
     - pytest==4.6.3
     - pylint==2.3.1

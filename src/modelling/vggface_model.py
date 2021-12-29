@@ -63,18 +63,10 @@ class Model(keras.Model):
     def __init__(self, base_model):
         super().__init__()
         self.resize = keras.layers.Resizing(224,224)
-        self.augment = keras.Sequential([
-            keras.layers.RandomZoom((-0.2, 0.2), fill_mode='reflect'),
-            keras.layers.RandomTranslation(0.2, 0.2, fill_mode='reflect'),
-            keras.layers.RandomRotation(0.2, fill_mode='reflect'),
-            keras.layers.RandomContrast(0.2)
-        ])
         self.base_model = base_model
     
-    def call(self, inputs, training=False):
+    def call(self, inputs):
         x = self.resize(inputs)
-        if training:
-            x = self.augment(x)
         x = self.base_model(x)
         return x
 
