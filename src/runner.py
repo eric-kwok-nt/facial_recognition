@@ -10,7 +10,7 @@ def runner():
     input_node = live.Node()                # get images from webcam
     mtcnn_node = mtcnn.Node()               # face detection
     model_node = facial_recognition.Node()  # facial recognition
-    draw_node = bbox.Node()                 # draw bounding boxes
+    draw_node = bbox.Node(show_labels=True)                 # draw bounding boxes
     output_node = screen.Node()             # display output to screen
 
     # Run it in the runner
