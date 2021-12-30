@@ -42,12 +42,7 @@ class Node(AbstractNode):
         # testing: see if we are getting the bounding boxes from the inputs
         #print(inputs["bboxes"])
 
-        self.recognise_faces(inputs["img"], inputs["bboxes"])
-
-        outputs = {
-            "bbox_scores": ...,
-            "bbox_labels": ...,
-        }
+        outputs = self.recognise_faces(inputs["img"], inputs["bboxes"])
 
         return outputs
 
@@ -55,6 +50,10 @@ class Node(AbstractNode):
         # put your facial recognition function here
         pass
 
-        # returns: "bbox_scores" and "bbox_labels"
+        # returns: Remember to return dict of "bbox_scores" and "bbox_labels"
+        # e.g. outputs = {
+        #          "bbox_scores": ...,
+        #          "bbox_labels": ...,
+        #      }
 
         
