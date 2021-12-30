@@ -14,8 +14,6 @@ class Create_Embeddings:
     def __init__(self):
         self.cleaned_image_dict = defaultdict(list)
         self.augment = keras.Sequential([
-            keras.layers.RandomZoom((-0.2, 0.2), fill_mode='reflect'),
-            keras.layers.RandomTranslation(0.2, 0.2, fill_mode='reflect'),
             keras.layers.RandomRotation(0.2, fill_mode='reflect'),
             keras.layers.RandomContrast(0.2)
         ])
@@ -34,10 +32,10 @@ class Create_Embeddings:
                     except (IOError, SyntaxError) as e:
                         print('Bad File:', f)
 
-    def get_embeddings(self, image: np.ndarray, model, BGR=True, is_train=False):
+    def get_embeddings(self, image: np.ndarray, model, BGR=True, augment=False):
         if BGR:
             image = image[:,:,::-1] # Convert from BGR to RGB
-        if is_train:
+        if augment:
             image = self.augment(image)
         # prepare the face for the model, e.g. center pixels
         image = np.asarray([image], 'float32')
@@ -46,19 +44,23 @@ class Create_Embeddings:
         yhat = model.predict(samples)
         return yhat
     
-    def build_embedding_db(self, model, save_path=None):
+    def build_embedding_db(self, model, save_path=None, augment=0):
+        assert isinstance(augment, int) and (augment >= 0), "Please enter an augment integer >= 0"
         embedding_dict = defaultdict(list)
         total = 0
         for k, image_list in self.cleaned_image_dict.items():
-            total += len(image_list)
+            total += len(image_list) * (augment + 1)
         with tqdm(total=total, desc="embeddding progress") as pbar:
             for k, image_list in self.cleaned_image_dict.items():
-                for img_path in image_list:
+                for img_path in image_list:                    
                     img = np.array(Image.open(img_path))
-                    embedding = self.get_embeddings(img, model, BGR=False, is_train=False).tolist()
-                    embedding_dict['embedding'] += embedding
-                    embedding_dict['class'] += [k]
-                    pbar.update(1)
+                    aug = False
+                    for _ in range(augment+1):
+                        embedding = self.get_embeddings(img, model, BGR=False, augment=aug).tolist()
+                        embedding_dict['embedding'] += embedding
+                        embedding_dict['class'] += [k]
+                        aug = True
+                        pbar.update(1)
         if save_path is not None:
             folder, _ = os.path.split(save_path)
             if not os.path.exists(folder):
@@ -80,5 +82,5 @@ if __name__ == '__main__':
     # img = np.array(Image.open(image_path))
     # print(CE.get_embeddings(img, model, BGR=False, is_train=True))
     embedding_path = './data/embedding.pickle'
-    CE.build_embedding_db(model, embedding_path)
+    CE.build_embedding_db(model, embedding_path, augment=4)
 

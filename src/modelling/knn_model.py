@@ -13,8 +13,8 @@ class KNN_Classify:
         self.knn_path = knn_path
         self.knn = KNeighborsClassifier(1, metric='euclidean', n_jobs=-1)
         self.embedding_dict = None
-        self.embedding_url = 'https://drive.google.com/u/0/uc?id=1btkzPHmAsUVqNYSZpM6CuM2r_jI7utNX&export=download'
-        self.knn_url = None #:TODO Add knn url
+        self.embedding_url = 'https://drive.google.com/u/0/uc?export=download&confirm=663Q&id=12dbMuLnbK2nzYQO7Hg_Gx-pueGB9HrGo'
+        self.knn_url = "https://drive.google.com/u/0/uc?export=download&confirm=OyUD&id=1nzkRQUv2kUiY1r9u_Notep3EAvh8SMHp"
 
     def download_(self, url, file_path):
         if not os.path.exists(file_path):
@@ -36,7 +36,7 @@ class KNN_Classify:
             with open(self.knn_path, 'wb') as f:
                 pickle.dump(self.knn, f)
 
-    def predict(self, embedding: np.ndarray, threshold: float):
+    def predict(self, embedding: np.ndarray, threshold=0.36331658291457286):
         _, neigh_ind = self.knn.kneighbors(embedding, n_neighbors=1)
         neigh_ind = neigh_ind.ravel()
         neigh_embedding = self.embedding_dict['embedding'][neigh_ind]
