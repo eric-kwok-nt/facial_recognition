@@ -18,7 +18,11 @@ class Node(AbstractNode):
     def __init__(self, config: Dict[str, Any] = None, **kwargs: Any) -> None:
         # super().__init__(config, node_path=__name__, **kwargs)
         # super().__init__(config, node_path='/Users/ericlee/data/coding/AIAP/team4/src/custom_nodes/configs/model.facial_recognition', **kwargs)
-        node_path = os.path.join(os.getcwd(), 'src/custom_nodes/configs/model.facial_recognition')
+        node_path = os.path.join(
+            os.getcwd(), "src/custom_nodes/configs/model.facial_recognition"
+        )
+        print(f"node_name: {self.node_name}")
+        print(f"config: {self.config}")
         super().__init__(config, node_path=node_path, **kwargs)
 
         # initialize/load any configs and models here
@@ -35,11 +39,22 @@ class Node(AbstractNode):
             outputs (dict): Dictionary with keys "__".
         """
 
-        # result = do_something(inputs["in1"], inputs["in2"])
-        # outputs = {"out1": result}
-        # return outputs
+        # testing: see if we are getting the bounding boxes from the inputs
+        #print(inputs["bboxes"])
 
-        print(inputs['bboxes'])
-        result = 'success!'
-        outputs = {"out1": result}
+        self.recognise_faces(inputs["img"], inputs["bboxes"])
+
+        outputs = {
+            "bbox_scores": ...,
+            "bbox_labels": ...,
+        }
+
         return outputs
+
+    def recognise_faces():
+        # put your facial recognition function here
+        pass
+
+        # returns: "bbox_scores" and "bbox_labels"
+
+        
