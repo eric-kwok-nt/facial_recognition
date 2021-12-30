@@ -48,6 +48,7 @@ def get(**kwargs):
     >>> session_state.user_name
     'Mary'
     """
+    # Hack to get the session object from Streamlit.
 
     ctx = ReportThread.get_report_ctx()
 
@@ -76,7 +77,7 @@ def get(**kwargs):
 
     if this_session is None:
         raise RuntimeError(
-            "Oh noes. Couldn't get your Streamlit Session object. "
+            "Oh no! Couldn't get your Streamlit Session object. "
             'Are you doing something fancy with threads?')
 
     # Got the session object! Now let's attach some state into it.
