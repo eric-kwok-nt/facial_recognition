@@ -1,0 +1,8 @@
+nodes:
+- input.live
+- model.mtcnn
+- custom_nodes.model.facial_recognition
+- dabble.fps
+- draw.bbox:
+    show_labels: True
+- output.screen
