@@ -18,8 +18,8 @@ def runner():
     runner.run()
 
     # Inspect the data
-    print(f"type(runner.pipeline.data): {type(runner.pipeline.data)}")
-    print(f"runner.pipeline.data: {runner.pipeline.data}")
+    #print(f"type(runner.pipeline.data): {type(runner.pipeline.data)}")
+    #print(f"runner.pipeline.data: {runner.pipeline.data}")
 
     return runner.pipeline.data['img'], runner.pipeline.data['bboxes'], runner.pipeline.data['bbox_labels']
 
