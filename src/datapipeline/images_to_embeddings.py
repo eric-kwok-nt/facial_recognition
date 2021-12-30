@@ -1,16 +1,10 @@
 import os
-import json
-import cv2
-import pandas as pd
+import pickle
 from PIL import Image
 import numpy as np
 from collections import defaultdict
-import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras.utils import img_to_array
-from keras_vggface.vggface import VGGFace
 from keras_vggface.utils import preprocess_input
-from typing import Tuple
 from src.modelling.vggface_model import VGGFace_Model
 from tqdm import tqdm
 
@@ -52,8 +46,8 @@ class Create_Embeddings:
         yhat = model.predict(samples)
         return yhat
     
-    def build_embedding_db(self, model, save_path: str):
-        rows = []
+    def build_embedding_db(self, model, save_path=None):
+        embedding_dict = defaultdict(list)
         total = 0
         for k, image_list in self.cleaned_image_dict.items():
             total += len(image_list)
@@ -61,14 +55,21 @@ class Create_Embeddings:
             for k, image_list in self.cleaned_image_dict.items():
                 for img_path in image_list:
                     img = np.array(Image.open(img_path))
-                    embedding = self.get_embeddings(img, model, BGR=False, is_train=False)
-                    rows.append([embedding, k])
+                    embedding = self.get_embeddings(img, model, BGR=False, is_train=False).tolist()
+                    embedding_dict['embedding'] += embedding
+                    embedding_dict['class'] += [k]
                     pbar.update(1)
-        df = pd.DataFrame(rows, columns=['embedding', 'class'])
-        df.to_csv(save_path, index=False)
+        if save_path is not None:
+            folder, _ = os.path.split(save_path)
+            if not os.path.exists(folder):
+                os.makedirs(folder)
+            with open(save_path, 'wb') as f:
+                pickle.dump(embedding_dict, f)
+        return embedding_dict
+
 
 if __name__ == '__main__':
-    os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+    # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
     VGG_M = VGGFace_Model()
     model_folder_path = './models'
     model = VGG_M.build_model(model_folder_path)
@@ -78,6 +79,6 @@ if __name__ == '__main__':
     # image_path = CE.cleaned_image_dict['eric_kwok'][15]
     # img = np.array(Image.open(image_path))
     # print(CE.get_embeddings(img, model, BGR=False, is_train=True))
-    csv_path = './data/embedding.csv'
-    CE.build_embedding_db(model, csv_path)
+    embedding_path = './data/embedding.pickle'
+    CE.build_embedding_db(model, embedding_path)
 

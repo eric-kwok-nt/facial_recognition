@@ -1,8 +1,6 @@
-import requests
 import os
 import logging
 import pickle
-from tqdm import tqdm
 from tensorflow import keras
 from keras_vggface.vggface import VGGFace
 from keras_vggface.utils import preprocess_input
@@ -17,10 +15,11 @@ class VGGFace_Model:
 
     def __init__(
         self, 
-        url="https://drive.google.com/u/0/uc?id=19_ESwSZPCJ7KzW72PAwc1z0R6ZD6wRPi&export=download"
+        url="https://drive.google.com/u/0/uc?id=19_ESwSZPCJ7KzW72PAwc1z0R6ZD6wRPi&export=download",
+        model_path='models/base_model.pickle'
         ):
         self.url = url
-        self.model_path = 'models/base_model.pickle'
+        self.model_path = model_path
 
     def download_model(self, target_path: str):
         base_model = VGGFace(model='resnet50', include_top=False, input_shape=(224, 224, 3), pooling='avg')
