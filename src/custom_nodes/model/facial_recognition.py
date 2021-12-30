@@ -21,8 +21,6 @@ class Node(AbstractNode):
         node_path = os.path.join(
             os.getcwd(), "src/custom_nodes/configs/model.facial_recognition"
         )
-        print(f"node_name: {self.node_name}")
-        print(f"config: {self.config}")
         super().__init__(config, node_path=node_path, **kwargs)
 
         # initialize/load any configs and models here
@@ -39,21 +37,23 @@ class Node(AbstractNode):
             outputs (dict): Dictionary with keys "__".
         """
 
-        # testing: see if we are getting the bounding boxes from the inputs
-        #print(inputs["bboxes"])
-
         outputs = self.recognise_faces(inputs["img"], inputs["bboxes"])
 
         return outputs
 
-    def recognise_faces():
+    def recognise_faces(self, img, bboxes):
+
         # put your facial recognition function here
-        pass
+
+        # The following code segment is here for testing, so that the custom
+        # node has something to pass to the next node. Please replace with
+        # your correct outputs i.e. "bbox_scores", "bbox_labels"
+        outputs = {"img": img, "bboxes": bboxes}
 
         # returns: Remember to return dict of "bbox_scores" and "bbox_labels"
-        # e.g. outputs = {
+        # e.g. {
         #          "bbox_scores": ...,
         #          "bbox_labels": ...,
         #      }
 
-        
+        return outputs
