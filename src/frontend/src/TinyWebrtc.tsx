@@ -21,6 +21,10 @@ import {
       this.videoRef = React.createRef()
     }
   
+    public componentDidUpdate = () => {
+        console.log("Answer:", this.props.args["answer"])
+    }
+
     public render = (): ReactNode => {
       return (
         <div>
@@ -78,7 +82,14 @@ import {
             console.error("Offer is null.")
             return
           }
+
+          // Offer created
           console.log(offer)
+          const offerJson = offer.toJSON()
+          console.log("Send offer SDP to Python process:", offerJson)
+          Streamlit.setComponentValue({
+            offerJson,
+          })
         })
     }
   
