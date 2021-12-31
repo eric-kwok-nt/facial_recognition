@@ -11,7 +11,6 @@ from src.modelling.knn_model import KNN_Classify
 from src.datapipeline.images_to_embeddings import Create_Embeddings
 import pdb
 
-
 class Node(AbstractNode):
     """This is a template class of how to write a node for PeekingDuck.
 
@@ -30,6 +29,7 @@ class Node(AbstractNode):
         embedding_path = './data/embedding.pickle' 
         knn_path = './models/knn.pickle'
         self.VGG_M = VGGFace_Model(model_path=model_path)
+        self.VGG_M.download_model()
         self.model_ = self.VGG_M.build_model()
         self.CE = Create_Embeddings()
         self.knn = KNN_Classify(embedding_path, knn_path)
@@ -59,13 +59,13 @@ class Node(AbstractNode):
             "bbox_labels": np.array([]),
             }
         # put your facial recognition function here
-        width, height, _ = img.shape
+        height, width, _ = img.shape
         for bbox in bboxes:
 
             x1, y1, x2, y2 = bbox
             x1, y1, x2, y2 = int(x1*width), int(y1*height), int(x2*width), int(y2*height)
             image_cropped = img[y1:y2, x1:x2]
-            embedding = self.CE.get_embeddings(image_cropped, self.model_, BGR=True, augment=False)
+            embedding = self.CE.get_embeddings(image_cropped, self.model_, BGR=False, augment=False)
             y_pred, y_prob = self.knn.predict(embedding,threshold=self.threshold)
             outputs["bbox_labels"] = np.append(outputs["bbox_labels"], y_pred)
             outputs["bbox_scores"] = np.append(outputs["bbox_scores"], y_prob)

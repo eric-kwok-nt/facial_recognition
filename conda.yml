@@ -2,8 +2,8 @@ channels:
   - defaults
 dependencies:
   - python=3.8.12
-  - pip=19.0.3
-  - numpy=1.17.2 # so we get the mkl libs as well
+  - pip
+  - numpy # so we get the mkl libs as well
   - pip:
     - keras==2.7.0
     - keras-applications==1.0.8

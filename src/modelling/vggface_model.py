@@ -1,12 +1,9 @@
-import os
 import logging
-import pickle
 from tensorflow import keras
 from keras_vggface.vggface import VGGFace
 from keras_vggface.utils import preprocess_input
 from PIL import Image
 import numpy as np
-from src.utils.download_file import download
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -26,18 +23,13 @@ class VGGFace_Model:
         """
         self.url = url
         self.model_path = model_path
+        self.base_model = None
 
     def download_model(self):
         """Downloads the VGGFace model from the original source.
         """
         logger.info("Proceed to download model...")
-        base_model = VGGFace(model='resnet50', include_top=False, input_shape=(224, 224, 3), pooling='avg')
-        folder, _ = os.path.split(self.model_path)
-        if not os.path.exists(folder):
-            logger.info(f"{folder} not found. Creating...")
-            os.makedirs(folder)
-        with open(self.model_path, 'wb') as f:
-            pickle.dump(base_model, f)
+        self.base_model = VGGFace(model='resnet50', include_top=False, input_shape=(224, 224, 3), pooling='avg')
     
     def build_model(self) -> keras.Model:
         """Builds the model using the base model. If base_mode.pickle not found in 
@@ -46,14 +38,7 @@ class VGGFace_Model:
             keras.Model: Model with resize layer
         """
         logger.info("Building model...")
-        if not os.path.exists(self.model_path):
-            logger.info("Model not found. Downloading...")
-            folder, filename = os.path.split(self.model_path)
-            download(self.url, folder, filename)
-
-        with open(self.model_path, 'rb') as f:
-            base_model = pickle.load(f)
-        model = Model(base_model=base_model)
+        model = Model(base_model=self.base_model)
         return model
 
 

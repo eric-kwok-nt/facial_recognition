@@ -4,7 +4,6 @@ import os
 from mtcnn.mtcnn import MTCNN
 from PIL import Image
 import numpy as np
-import pdb
 
 
 logging.basicConfig(level=logging.INFO)
