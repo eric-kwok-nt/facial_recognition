@@ -63,7 +63,7 @@ class Node(AbstractNode):
                 x1, y1, x2, y2 = bbox
                 x1, y1, x2, y2 = int(x1*width), int(y1*height), int(x2*width), int(y2*height)
                 image_cropped = img[y1:y2, x1:x2]
-                embedding = self.CE.get_embeddings(image_cropped, self.model_, BGR=False, augment=False)
+                embedding = self.CE.get_embeddings(image_cropped, self.model_, BGR=True, augment=False)
                 y_pred, y_prob = self.knn.predict(embedding,threshold=self.threshold)
                 outputs["bbox_labels"] = np.append(outputs["bbox_labels"], y_pred)
                 outputs["bbox_scores"] = np.append(outputs["bbox_scores"], y_prob)
