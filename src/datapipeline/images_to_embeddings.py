@@ -7,11 +7,14 @@ from tensorflow import keras
 from keras_vggface.utils import preprocess_input
 from src.modelling.vggface_model import VGGFace_Model
 from tqdm import tqdm
+from typing import Dict
 
 
 class Create_Embeddings:
 
     def __init__(self):
+        """This class loads images and creates embeddings for images
+        """
         self.cleaned_image_dict = defaultdict(list)
         self.augment = keras.Sequential([
             keras.layers.RandomRotation(0.2, fill_mode='reflect'),
@@ -19,6 +22,12 @@ class Create_Embeddings:
         ])
 
     def load_images_paths(self, img_path: str):
+        """Walk through the files and folders in img_path and save the image paths as values with subfolders as keys (class of image)
+        It also checks whether the image is corrupted.
+
+        Args:
+            img_path (str): Path of the image
+        """
         image_formats = {'.jpg', '.png', '.jpeg'}
         for root, dirs, files in os.walk(img_path):
             for f in files:
@@ -32,7 +41,18 @@ class Create_Embeddings:
                     except (IOError, SyntaxError) as e:
                         print('Bad File:', f)
 
-    def get_embeddings(self, image: np.ndarray, model, BGR=True, augment=False):
+    def get_embeddings(self, image: np.ndarray, model: keras.Model, BGR=True, augment=False) -> np.ndarray:
+        """Given an image and a backbone model, it outputs the embedding
+
+        Args:
+            image (np.ndarray): Image to be converted
+            model (keras.Model): Model to use for the conversion
+            BGR (bool, optional): Whether the image is in BGR or RGB. Defaults to True.
+            augment (bool, optional): Whether to augment the image. Defaults to False.
+
+        Returns:
+            np.ndarray: Image Embedding [num_sample, num_features]
+        """
         if BGR:
             image = image[:,:,::-1] # Convert from BGR to RGB
         if augment:
@@ -44,7 +64,17 @@ class Create_Embeddings:
         yhat = model.predict(samples)
         return yhat
     
-    def build_embedding_db(self, model, save_path=None, augment=0):
+    def build_embedding_db(self, model: keras.Model, save_path=None, augment=0) -> Dict[str, list]:
+        """Builds an embedding database
+
+        Args:
+            model (keras.Model): Model used for obtaining embeddings
+            save_path (str, optional): Path to save the embeddings to in the form of pickle format. If None, it will not save into pickle file. Defaults to None.
+            augment (int, optional): Number of augmented copy of images per image. Defaults to 0.
+
+        Returns:
+            Dict[str, list]: Keys are 'embedding' and 'class'. Each element in the embedding list correspond to the element in the class list
+        """
         assert isinstance(augment, int) and (augment >= 0), "Please enter an augment integer >= 0"
         embedding_dict = defaultdict(list)
         total = 0
@@ -72,9 +102,9 @@ class Create_Embeddings:
 
 if __name__ == '__main__':
     # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
-    VGG_M = VGGFace_Model()
-    model_folder_path = './models'
-    model = VGG_M.build_model(model_folder_path)
+    model_path = 'models/base_model.pickle'
+    VGG_M = VGGFace_Model(model_path=model_path)
+    model = VGG_M.build_model()
 
     CE = Create_Embeddings()
     CE.load_images_paths('./data/raw/output/train')

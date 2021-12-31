@@ -18,23 +18,38 @@ class VGGFace_Model:
         url="https://drive.google.com/u/0/uc?id=19_ESwSZPCJ7KzW72PAwc1z0R6ZD6wRPi&export=download",
         model_path='models/base_model.pickle'
         ):
+        """Builds and save the VGGFace2 model
+
+        Args:
+            url (str, optional): URL where model is to be downloaded online. Defaults to "https://drive.google.com/u/0/uc?id=19_ESwSZPCJ7KzW72PAwc1z0R6ZD6wRPi&export=download".
+            model_path (str, optional): Path of the model to be downloaded or saved to. Defaults to 'models/base_model.pickle'.
+        """
         self.url = url
         self.model_path = model_path
 
-    def download_model(self, target_path: str):
+    def download_model(self):
+        """Downloads the VGGFace model from the original source.
+        """
+        logger.info("Proceed to download model...")
         base_model = VGGFace(model='resnet50', include_top=False, input_shape=(224, 224, 3), pooling='avg')
-        if not os.path.exists(target_path):
-            logger.info(f"{target_path} not found. Creating...")
-            os.makedirs(target_path)
-        file_name = 'base_model.pickle'
-        self.model_path = os.path.join(target_path, file_name)
+        folder, _ = os.path.split(self.model_path)
+        if not os.path.exists(folder):
+            logger.info(f"{folder} not found. Creating...")
+            os.makedirs(folder)
         with open(self.model_path, 'wb') as f:
             pickle.dump(base_model, f)
     
-    def build_model(self, target_path=None):
+    def build_model(self) -> keras.Model:
+        """Builds the model using the base model. If base_mode.pickle not found in 
+
+        Returns:
+            keras.Model: Model with resize layer
+        """
+        logger.info("Building model...")
         if not os.path.exists(self.model_path):
-            assert target_path is not None, "Please input target path for base model to be downloaded"
-            download(self.url, target_path, 'base_model.pickle')
+            logger.info("Model not found. Downloading...")
+            folder, filename = os.path.split(self.model_path)
+            download(self.url, folder, filename)
 
         with open(self.model_path, 'rb') as f:
             base_model = pickle.load(f)
@@ -56,10 +71,10 @@ class Model(keras.Model):
 
     
 if __name__ == '__main__':
-    VGG_M = VGGFace_Model()
-    model_folder_path = './models'
-    # VGG_M.download_model(target_path=model_folder_path)
-    model = VGG_M.build_model(model_folder_path)
+    model_path = './models/base_model.pickle'
+    VGG_M = VGGFace_Model(model_path=model_path)
+    # VGG_M.download_model()
+    model = VGG_M.build_model()
     
     def get_embeddings(files, model):
         faces = [f for f in files]

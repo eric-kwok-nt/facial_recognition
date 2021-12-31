@@ -35,7 +35,7 @@ class Video2Image:
         success, image = vidcap.read()
         count = 0
         while success:
-            image = self.image_rotate(image, name)
+            image = self._image_rotate(image, name)
             face = self.extract_face(image, (224, 224))
             if face is not False:
                 image_path = os.path.join(save_path, f"{count}_{name}.jpg")
@@ -45,7 +45,8 @@ class Video2Image:
         
         logger.info(f"Converted {count} images")
 
-    def image_rotate(self, image, name):
+    def _image_rotate(self, image, name):
+        # Private method to rotate image
         if name == 'eric_kwok':
             return cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE) 
         elif name == 'eric_lee':
