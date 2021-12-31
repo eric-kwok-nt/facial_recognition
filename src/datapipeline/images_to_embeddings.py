@@ -102,8 +102,7 @@ class Create_Embeddings:
 
 if __name__ == '__main__':
     # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
-    model_path = 'models/base_model.pickle'
-    VGG_M = VGGFace_Model(model_path=model_path)
+    VGG_M = VGGFace_Model()
     model = VGG_M.build_model()
 
     CE = Create_Embeddings()

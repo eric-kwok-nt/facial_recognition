@@ -48,7 +48,7 @@ class Model(keras.Model):
 if __name__ == '__main__':
     model_path = './models/base_model.pickle'
     VGG_M = VGGFace_Model(model_path=model_path)
-    # VGG_M.download_model()
+    VGG_M.download_model()
     model = VGG_M.build_model()
     
     def get_embeddings(files, model):

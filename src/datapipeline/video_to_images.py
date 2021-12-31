@@ -74,9 +74,10 @@ if __name__ == '__main__':
     # names = ['eric_lee', 'clarence', 'eric_kwok']
     # vid_paths = ['data/raw/videos/clarence.mov', 'data/raw/videos/eric_kwok.mp4']
     # names = ['clarence', 'eric_kwok']
-    vid_paths = ['data/raw/videos/eric_kwok.mp4']
+    vid_paths = ['data/raw/videos/eric_kwok_test.mp4']
     names = ['eric_kwok']
+    # vid_paths = ['data/raw/videos/eric_lee_test.mp4', 'data/raw/videos/clarence_test.mov', 'data/raw/videos/eric_kwok_test.mp4']
     VI = Video2Image()
     for vid_path, name in zip(vid_paths, names):
-        save_path = os.path.join('data/raw/images', name)
+        save_path = os.path.join('data/raw/output/test', name)
         VI.convert(vid_path, name, save_path)
