@@ -5,6 +5,7 @@ dependencies:
   - pip
   - numpy # so we get the mkl libs as well
   - pip:
+    - gdown
     - keras==2.7.0
     - keras-applications==1.0.8
     - keras-vggface==0.6

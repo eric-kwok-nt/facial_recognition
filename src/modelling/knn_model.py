@@ -4,7 +4,7 @@ import pickle
 import logging
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics.pairwise import cosine_similarity
-from src.utils.download_file import download
+from src.utils.download_file import download_gdrive
 from typing import Union, Any, Tuple, List
 
 logging.basicConfig(level=logging.INFO)
@@ -40,7 +40,7 @@ class KNN_Classify:
         logger.info(f"Getting {file_path}")
         if not os.path.exists(file_path):
             folder, filename = os.path.split(file_path)
-            download(url, folder, filename)
+            download_gdrive(url, folder, filename)
         with open(file_path, 'rb') as f:
             obj = pickle.load(f)
         logger.info(f"{file_path} successfully loaded")

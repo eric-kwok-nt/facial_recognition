@@ -10,19 +10,9 @@ logger = logging.getLogger(__name__)
 
 class VGGFace_Model:
 
-    def __init__(
-        self, 
-        url="https://drive.google.com/u/0/uc?id=19_ESwSZPCJ7KzW72PAwc1z0R6ZD6wRPi&export=download",
-        model_path='models/base_model.pickle'
-        ):
+    def __init__(self):
         """Builds and save the VGGFace2 model
-
-        Args:
-            url (str, optional): URL where model is to be downloaded online. Defaults to "https://drive.google.com/u/0/uc?id=19_ESwSZPCJ7KzW72PAwc1z0R6ZD6wRPi&export=download".
-            model_path (str, optional): Path of the model to be downloaded or saved to. Defaults to 'models/base_model.pickle'.
         """
-        self.url = url
-        self.model_path = model_path
         self.base_model = None
 
     def download_model(self):
