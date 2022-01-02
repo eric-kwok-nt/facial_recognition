@@ -3,13 +3,15 @@ from peekingduck.runner import Runner
 from peekingduck.pipeline.nodes.input import live, recorded
 from peekingduck.pipeline.nodes.model import mtcnn
 from .custom_nodes.model import facial_recognition
+from .custom_nodes.output import api
 from peekingduck.pipeline.nodes.dabble import fps
 from peekingduck.pipeline.nodes.draw import bbox, legend
 from peekingduck.pipeline.nodes.output import screen
 
 recorded_video_filepath = "./data/raw/videos"
 
-def runner(live_video=True):
+
+def runner(type="live_video", input_filepath=recorded_video_filepath):
     """Runs the Peeking Duck pipeline.
 
     Args:
@@ -23,11 +25,11 @@ def runner(live_video=True):
         runner.pipeline.data["bbox_labels"]: The Peeking Duck data pool dict items.
     """
     # Initialise the nodes
-    if live_video:
+    if type == "live_video":
         input_node = live.Node()  # get images from webcam
-    else:
+    elif (type == "recorded_video") or (type == "api"):
         input_node = recorded.Node(
-            input_dir=os.path.join(os.getcwd(), recorded_video_filepath),
+            input_dir=os.path.join(os.getcwd(), input_filepath),
             threading=True,
             buffer_frames=True,
         )  # get images from local file
@@ -37,7 +39,10 @@ def runner(live_video=True):
     dabble_node = fps.Node()  # frames per second
     draw_bbox_node = bbox.Node(show_labels=True)  # draw bounding boxes
     draw_legend_node = legend.Node()  # display fps in legend box
-    output_node = screen.Node()  # display output to screen
+    if (type == "live_video") or (type == "recorded_video"):
+        output_node = screen.Node()  # display output to screen
+    elif type == "api":
+        output_node = api.Node()  # no outputs except return values to API
 
     # Run it in the runner
     runner = Runner(
@@ -53,10 +58,6 @@ def runner(live_video=True):
     )
     runner.run()
 
-    # Inspect the data
-    # print(f"type(runner.pipeline.data): {type(runner.pipeline.data)}")
-    # print(f"runner.pipeline.data: {runner.pipeline.data}")
-
     return (
         runner.pipeline.data["img"],
         runner.pipeline.data["bboxes"],
@@ -65,4 +66,4 @@ def runner(live_video=True):
 
 
 if __name__ == "__main__":
-    runner(live_video=True)
+    runner(type="live_video")
