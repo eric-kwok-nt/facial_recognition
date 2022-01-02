@@ -14,7 +14,6 @@ from .runner import runner
 
 logging.basicConfig(level=logging.INFO)
 
-local_testing = False
 api_dir = "src/data/temp_api"
 
 app = Flask(__name__)
@@ -49,8 +48,7 @@ def fr():
     predicted_name = str(bbox_labels[0])
 
     # Delete temp image file after using it for prediction.
-    if not local_testing:
-        os.remove(temp_filepath)
+    os.remove(temp_filepath)
 
     logging.info(f"Temp file deleted: {temp_filename}")
 
