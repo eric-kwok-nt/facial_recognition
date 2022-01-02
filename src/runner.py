@@ -3,7 +3,8 @@ from peekingduck.runner import Runner
 from peekingduck.pipeline.nodes.input import live, recorded
 from peekingduck.pipeline.nodes.model import mtcnn
 from .custom_nodes.model import facial_recognition
-from peekingduck.pipeline.nodes.draw import bbox
+from peekingduck.pipeline.nodes.dabble import fps
+from peekingduck.pipeline.nodes.draw import bbox, legend
 from peekingduck.pipeline.nodes.output import screen
 
 recorded_video_filepath = "./data/raw/videos"
@@ -26,16 +27,30 @@ def runner(live_video=True):
         input_node = live.Node()  # get images from webcam
     else:
         input_node = recorded.Node(
-            input_dir=os.path.join(os.getcwd(), recorded_video_filepath)
+            input_dir=os.path.join(os.getcwd(), recorded_video_filepath),
+            threading=True,
+            buffer_frames=True,
         )  # get images from local file
 
     mtcnn_node = mtcnn.Node()  # face detection
     model_node = facial_recognition.Node()  # facial recognition
-    draw_node = bbox.Node(show_labels=True)  # draw bounding boxes
+    dabble_node = fps.Node()  # frames per second
+    draw_bbox_node = bbox.Node(show_labels=True)  # draw bounding boxes
+    draw_legend_node = legend.Node()  # display fps in legend box
     output_node = screen.Node()  # display output to screen
 
     # Run it in the runner
-    runner = Runner(nodes=[input_node, mtcnn_node, model_node, draw_node, output_node])
+    runner = Runner(
+        nodes=[
+            input_node,
+            mtcnn_node,
+            model_node,
+            dabble_node,
+            draw_bbox_node,
+            draw_legend_node,
+            output_node,
+        ]
+    )
     runner.run()
 
     # Inspect the data
@@ -50,4 +65,4 @@ def runner(live_video=True):
 
 
 if __name__ == "__main__":
-    runner(live_video=False)
+    runner(live_video=True)
