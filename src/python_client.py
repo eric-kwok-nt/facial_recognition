@@ -11,22 +11,22 @@ from PIL import Image, ImageFont, ImageDraw
 logging.basicConfig(level=logging.INFO)
 
 endpoint = "http://0.0.0.0:8000/fr"
-# endpoint = 'http://hongyeowlee.aiap.okdapp.tekong.aisingapore.net/fr'
+# endpoint = 'http://team4.aiap.okdapp.tekong.aisingapore.net/fr'
 
 
 def get_prediction(image_path, endpoint=endpoint):
     files = {"file": open(os.path.join(os.getcwd(), image_path), "rb")}
     r = requests.post(endpoint, files=files)
 
-    # Raise exception if HTTP response status is not 200.
+    # raise exception if HTTP response status is not 200
     if r.status_code != requests.codes.ok:
         r.raise_for_status()
 
     prediction = r.json()
 
-    img = prediction["img"] #Take out base64# str
-    img = base64.b64decode(img) #Convert image data converted to base64 to original binary data# bytes
-    img = BytesIO(img) # _io.Converted to be handled by BytesIO pillow
+    img = prediction["img"] # get image data (base64 in utf-8-encoded str)
+    img = base64.b64decode(img) # convert base64 to original binary data bytes
+    img = BytesIO(img)
     img = Image.open(img)
 
     # Convert from BGR to RGB

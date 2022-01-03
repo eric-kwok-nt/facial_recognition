@@ -47,20 +47,20 @@ def fr():
 
     predicted_name = str(bbox_labels[0])
 
-    # Delete temp image file after using it for prediction.
+    # delete temp image file after using it for prediction.
     os.remove(temp_filepath)
 
     logging.info(f"Temp file deleted: {temp_filename}")
 
     img = Image.fromarray(img_array)
 
-    #Convert Pillow Image to bytes and then to base64
+    # convert Pillow Image binary data to base64
     buffered = BytesIO()
     img.save(buffered, format="JPEG")
     img_byte = buffered.getvalue() # bytes
-    img_base64 = base64.b64encode(img_byte) #Base64-encoded bytes * not str
+    img_base64 = base64.b64encode(img_byte) # base64-encoded bytes (type is still byte, not str)
 
-    #It's still bytes so json.Convert to str to dumps(Because the json element does not support bytes type)
+    # convert to str because json does not support bytes type
     img_str = img_base64.decode('utf-8') # str
 
     resp_dict = {
