@@ -36,7 +36,8 @@ def runner(type="live_video", input_filepath=recorded_video_filepath):
 
     mtcnn_node = mtcnn.Node()  # face detection
     model_node = facial_recognition.Node()  # facial recognition
-    dabble_node = fps.Node()  # frames per second
+    if type != "api":
+        dabble_node = fps.Node()  # frames per second
     draw_bbox_node = bbox.Node(show_labels=True)  # draw bounding boxes
     draw_legend_node = legend.Node()  # display fps in legend box
     if (type == "live_video") or (type == "recorded_video"):
@@ -44,18 +45,30 @@ def runner(type="live_video", input_filepath=recorded_video_filepath):
     elif type == "api":
         output_node = api.Node()  # no outputs except return values to API
 
-    # Run it in the runner
-    runner = Runner(
-        nodes=[
-            input_node,
-            mtcnn_node,
-            model_node,
-            dabble_node,
-            draw_bbox_node,
-            draw_legend_node,
-            output_node,
-        ]
-    )
+    # Don't have Dabble:FPS node if it's for an API call
+    if type == "api":
+        runner = Runner(
+            nodes=[
+                input_node,
+                mtcnn_node,
+                model_node,
+                draw_bbox_node,
+                draw_legend_node,
+                output_node,
+            ]
+        )
+    else:
+        runner = Runner(
+            nodes=[
+                input_node,
+                mtcnn_node,
+                model_node,
+                dabble_node,
+                draw_bbox_node,
+                draw_legend_node,
+                output_node,
+            ]
+        )
     runner.run()
 
     return (
