@@ -4,6 +4,9 @@ import os
 from mtcnn.mtcnn import MTCNN
 from PIL import Image
 import numpy as np
+from pathlib import Path
+from src.datapipeline.images_to_embeddings import Create_Embeddings
+from tqdm import tqdm
 
 
 logging.basicConfig(level=logging.INFO)
@@ -67,6 +70,20 @@ class Video2Image:
         face = face.resize(required_size)
         face_array = np.asarray(face)
         return face_array
+
+    def extract_face_and_save(self, source_path: str, target_path: str):
+        assert os.path.exists(source_path), "Source path does not exists!"
+        assert os.path.exists(target_path), "Target path does not exists!"
+        CM = Create_Embeddings()
+        CM.load_images_paths(source_path)
+        folder_name = os.path.basename(source_path)
+        image_paths = CM.cleaned_image_dict[folder_name]
+        total = len(image_paths)
+        for img_path in tqdm(image_paths, total=total, desc="Image extract progress"):
+            img_bgr = cv2.imread(img_path)
+            face = self.extract_face(img_bgr, (224,224))
+            _, image_name = os.path.split(img_path)
+            cv2.imwrite(os.path.join(target_path, image_name), face)
 
 
 if __name__ == '__main__':
