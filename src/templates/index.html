@@ -26,9 +26,15 @@
     <div class="masthead">
         <div class="masthead-content text-white">
             <div class="container-fluid px-8 px-lg-0">
-                <h1 class="fst-italic lh-1 mb-4">PeekingDuckling</h1>
-                <p class="mb-5">Bringing you version 1.0 of PeekingDuckling!</p>
-                <img src="{{ url_for('video_feed') }}" width="100%">
+                <h1 class="fst-italic lh-2 mb-4">PeekingDuckling <img src="../static/assets/peekingduck.png" width="10%"></h1>
+                <p class="mb-5">Bringing you version 0.1 of PeekingDuckling!</p>
+                <p>
+                    <form action="/predict", method="post", enctype="multipart/form-data">
+                        <input type="file" name="imagefile" class="button3">
+                        <input type="submit" value="Upload" class="button2">
+                    </form>                  
+                </p>
+                <img src="{{ url_for('video_feed') }}" width="100%" style="margin-bottom:1.0em">
                 <form method="post" action="{{ url_for('tasks') }}">
                     <input type="submit" value="Stop/Start" name="stop" class="button1" />
                     <input type="submit" value="Capture" name="click" class="button2" />
