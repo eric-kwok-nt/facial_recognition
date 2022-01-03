@@ -9,8 +9,6 @@ import numpy as np
 from flask import Flask, render_template, make_response, request, jsonify, current_app
 from PIL import Image
 
-# from waitress import serve
-
 from .runner import runner
 
 logging.basicConfig(level=logging.INFO)
@@ -36,9 +34,6 @@ def fr():
     temp_filename_stem = str(uuid.uuid4())
     _, file_extension = os.path.splitext(uploaded_file.filename)
     temp_filename = temp_filename_stem + file_extension
-
-    # create our main temp directory if it doesn't exist
-    # Path(api_dir).mkdir(parents=True, exist_ok=True)
 
     # create temp dir for this specific API call, so that we don't have 
     # multiple images in the main temp dir and suffer data leakage.
