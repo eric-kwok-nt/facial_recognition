@@ -7,7 +7,7 @@ from peekingduck.pipeline.nodes.dabble import fps
 from peekingduck.pipeline.nodes.draw import bbox, legend
 from peekingduck.pipeline.nodes.output import screen
 
-recorded_video_filepath = "./data/raw/videos"
+recorded_video_filepath = "./data/raw/videos/test"
 
 def runner(live_video=True):
     """Runs the Peeking Duck pipeline.

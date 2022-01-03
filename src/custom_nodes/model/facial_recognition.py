@@ -33,7 +33,8 @@ class Node(AbstractNode):
         self.CE = Create_Embeddings()
         self.knn = KNN_Classify(embedding_path, knn_path)
         self.knn.build_model(fit_knn=False)
-        self.threshold = 0.3422110552763819
+        # self.threshold = 0.3422110552763819
+        self.threshold = 0.7
         # initialize/load any configs and models here
         # configs can be called by self.<config_name> e.g. self.filepath
         # self.logger.info(f"model loaded with configs: config")
