@@ -24,7 +24,7 @@ def runner(live_video=True):
     """
     # Initialise the nodes
     if live_video:
-        input_node = live.Node(input_source=1)  # get images from webcam
+        input_node = live.Node()  # get images from webcam
     else:
         input_node = recorded.Node(
             input_dir=os.path.join(os.getcwd(), recorded_video_filepath),
