@@ -1,0 +1,286 @@
+html, body {
+	overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+/*
+ * Custom translucent site header
+ */
+
+* {
+	font-family: neue-haas-grotesk-text, neue-haas-grotesk-display, Helvetica, sans-serif, Arial, sans-serif;
+	font-weight: 400;
+	overflow-x: hidden;
+}
+ 
+.site-header {
+  background-color: rgba(0, 0, 0, .85);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+.site-header a {
+  color: #8e8e8e;
+  transition: color .15s ease-in-out;
+}
+.site-header a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: calc(1.0rem + .9vw);
+  color: #fff;
+  vertical-align: middle;
+}
+
+h2 {
+  font-weight: 700;
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 1.0em;
+  text-transform: uppercase;
+}
+
+a:link {
+  text-decoration: none;
+  color: #222;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #222;
+}
+
+a:hover {
+  color: #26CAD3;
+}
+
+a:active {
+  text-decoration: underline;
+}
+
+/*
+ * Dummy devices (replace them with your own or something else entirely!)
+ */
+
+.button1 {
+  background-color: #F44336; 
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 16px;
+  padding: 0.75em;
+  margin: 4px 4px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.button2 {
+  background-color: #666666; 
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 16px;
+  padding: 0.75em;
+  margin: 4px 4px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.button3 {
+  background-color: #F44336; 
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 16px;
+  padding: 0.75em;
+  margin: 4px 4px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.video-display {
+    margin-top: 2.0em
+}
+
+.product-device {
+  position: absolute;
+  right: 10%;
+  bottom: -30%;
+  width: 300px;
+  height: 540px;
+  background-color: #333;
+  border-radius: 21px;
+  transform: rotate(30deg);
+}
+
+.product-device::before {
+  position: absolute;
+  top: 10%;
+  right: 10px;
+  bottom: 10%;
+  left: 10px;
+  content: "";
+  background-color: rgba(255, 255, 255, .1);
+  border-radius: 5px;
+}
+
+.product-device-2 {
+  top: -25%;
+  right: auto;
+  bottom: 0;
+  left: 5%;
+  background-color: #e5e5e5;
+}
+
+.product-title {
+	padding-left: 0.5em;
+	border-left: 8px solid #000;
+}
+
+.dotted {
+	border-bottom: 1px solid #ccc;
+}
+
+.divider {
+	padding: 1.0em 1.5em;
+}
+
+/*
+ * Extra utilities
+ */
+
+.flex-equal > * {
+  flex: 1;
+}
+@media (min-width: 768px) {
+  .flex-md-equal > * {
+    flex: 1;
+  }
+}
+
+.sitemap {
+  text-transform: uppercase;
+  font-size: 0.75em;
+  text-decoration: none;
+}
+
+.w3-animate-opacity {
+	animation: opac 4s
+}
+
+@keyframes opac {
+	from {
+		opacity: 0
+	}
+	to {
+		opacity: 1
+	}
+}
+
+.w3-animate-top {
+	position: relative;
+	animation: animatetop 1.0s
+}
+
+@keyframes animatetop {
+	from {
+		top: -300px;
+		opacity: 0
+	}
+	to {
+		top: 0;
+		opacity: 1
+	}
+}
+
+.w3-animate-left {
+	position: relative;
+	animation: animateleft .4s
+}
+
+@keyframes animateleft {
+	from {
+		left: -300px;
+		opacity: 0
+	}
+	to {
+		left: 0;
+		opacity: 1
+	}
+}
+
+.w3-animate-right {
+	position: relative;
+	animation: animateright .4s
+}
+
+@keyframes animateright {
+	from {
+		right: -300px;
+		opacity: 0
+	}
+	to {
+		right: 0;
+		opacity: 1
+	}
+}
+
+.w3-animate-bottom {
+	position: relative;
+	animation: animatebottom .4s
+}
+
+@keyframes animatebottom {
+	from {
+		bottom: -300px;
+		opacity: 0
+	}
+	to {
+		bottom: 0;
+		opacity: 1
+	}
+}
+
+.w3-animate-zoom {
+	animation: animatezoom .6s
+}
+
+@keyframes animatezoom {
+	from {
+		transform: scale(0)
+	}
+	to {
+		transform: scale(1)
+	}
+}
+
+.w3-animate-input {
+	transition: width .4s ease-in-out
+}
+
+.w3-animate-input:focus {
+	width: 100%!important
+}
+
+.hs {
+  width: 960px;
+  column-width: 300px;
+  column-gap: 50px;
+}
+
