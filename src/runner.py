@@ -7,11 +7,10 @@ from .custom_nodes.output import api
 from peekingduck.pipeline.nodes.dabble import fps
 from peekingduck.pipeline.nodes.draw import bbox, legend
 from peekingduck.pipeline.nodes.output import screen
+import argparse
 
-recorded_video_filepath = "./data/raw/videos/test"
 
-
-def runner(type="live_video", input_filepath=recorded_video_filepath):
+def runner(type="live_video", input_filepath="./data/raw/videos/test", input_source=0):
     """Runs the Peeking Duck pipeline.
 
     Args:
@@ -26,7 +25,7 @@ def runner(type="live_video", input_filepath=recorded_video_filepath):
     """
     # Initialise the nodes
     if type == "live_video":
-        input_node = live.Node()  # get images from webcam
+        input_node = live.Node(input_source=input_source)  # get images from webcam
     elif (type == "recorded_video") or (type == "api"):
         input_node = recorded.Node(
             input_dir=os.path.join(os.getcwd(), input_filepath),
@@ -79,4 +78,18 @@ def runner(type="live_video", input_filepath=recorded_video_filepath):
 
 
 if __name__ == "__main__":
-    runner(type="live_video")
+    parser = argparse.ArgumentParser(description="Facial Recoginition algorithm")
+    parser.add_argument(
+        '--type', type=str, default='live_video',
+        choices=['live_video', 'recorded_video'])
+    parser.add_argument(
+        '--input_filepath', type=str, default="./data/raw/videos/test",
+        help="The path to your video files if --type is 'recorded_video'")
+    parser.add_argument(
+        '--input_source', type=int, default=0,
+        help='Input source integer value. Refer to cv2 VideoCapture class')
+    parsed = parser.parse_args()
+    runner(
+        type=parsed.type, 
+        input_filepath=parsed.input_filepath, 
+        input_source=parsed.input_source)

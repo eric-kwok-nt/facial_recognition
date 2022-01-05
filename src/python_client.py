@@ -10,7 +10,7 @@ from PIL import Image, ImageFont, ImageDraw
 
 logging.basicConfig(level=logging.INFO)
 
-endpoint = "http://localhost:8000/fr"
+endpoint = "http://172.21.160.98:8000/fr"
 # endpoint = "http://0.0.0.0:8000/fr"
 # endpoint = 'http://team4.aiap.okdapp.tekong.aisingapore.net/fr'
 

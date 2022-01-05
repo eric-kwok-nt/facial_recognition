@@ -5,9 +5,33 @@ This is an implementation of facial identification algorithm to detect and ident
 We will be using the [PeekingDuck](https://github.com/aimakerspace/PeekingDuck) framework for this mini project.
 
 ## 2. Usage
+### 2.1 Running the PeekingDuck node directly
+```bash
+python -m src.runner
+```
+```
+optional arguments:
+  -h, --help            show this help message and exit
+  --type {live_video,recorded_video}
+  --input_filepath INPUT_FILEPATH
+                        The path to your video files if --type is 'recorded_video'
+  --input_source INPUT_SOURCE
+                        Input source integer value. Refer to cv2 VideoCapture class
+```
+### 2.2 Using the PeekingDuck from the web interface
+```bash
+python -m src.camera
+```
 
-
-## 3. Model and Training 
+### 2.3 Face recognition using only 1 photo
+```bash
+python -m src.app
+```
+On a separate terminal, issue the following command
+```bash
+python -m src.python_client <path_to_your_image>
+```
+## 3. Model 
 
 ### 3.1 Face Detection
 In this repository, we will be using the the library from [PeekingDuck](https://github.com/aimakerspace/PeekingDuck) to perform facial detection. 
