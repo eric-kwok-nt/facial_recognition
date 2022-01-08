@@ -75,9 +75,9 @@ The test was conducted with the tuned threshold on the validation dataset, and t
 The authors would like to thank the mentor [Lee Ping](https://gitlab.aisingapore.net/ngleeping) for providing us with the technical suggestions as well as the inputs on the implementation of this project.
 
 **Authors:**
-* [Eric Kwok](https://github.com/eric-kwok-nt) (Backend Facial Recognition)
-* [Eric Lee](https://gitlab.aisingapore.net/hong_yeow_lee) (Implementation of PeekingDuck framework)
-* [Clarence Lam](https://github.com/clarevoyance) (Frontend web interface)
+* [Eric Kwok](https://github.com/eric-kwok-nt) (Backend Face Identification)
+* [Eric Lee](https://gitlab.aisingapore.net/hong_yeow_lee) (Implementation of PeekingDuck Framework)
+* [Clarence Lam](https://github.com/clarevoyance) (Frontend Web Interface)
 
 **References** _(Non exhausive)_
 * [PeekingDuck](https://github.com/aimakerspace/PeekingDuck)
