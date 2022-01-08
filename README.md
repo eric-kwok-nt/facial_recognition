@@ -13,13 +13,21 @@ We will be using the [PeekingDuck](https://github.com/aimakerspace/PeekingDuck) 
 python -m src.runner
 ```
 ```
+usage: runner.py [-h] [--type {live_video,recorded_video,live_video_and_save}] [--input_filepath INPUT_FILEPATH] [--input_source INPUT_SOURCE] [--save_video_path SAVE_VIDEO_PATH] [--fps FPS]
+
+Facial Recoginition algorithm
+
 optional arguments:
   -h, --help            show this help message and exit
-  --type {live_video,recorded_video}
+  --type {live_video,recorded_video,live_video_and_save}
+                        Whether to use live webcam video or from a recorded video, or from a live webcam video and saving the recorded frames as a video file.
   --input_filepath INPUT_FILEPATH
                         The path to your video files if --type is 'recorded_video'
   --input_source INPUT_SOURCE
-                        Input source integer value. Refer to cv2 VideoCapture class
+                        Input source integer value. Refer to cv2 VideoCapture class. Applicable for --type ['live_video' | 'live_video_and_save']
+  --save_video_path SAVE_VIDEO_PATH
+                        Path for video to be saved. Applicable for --type 'live_video_and_save'
+  --fps FPS             Frames per second for video to be saved. Applicable for --type 'live_video_and_save'
 ```
 ### 2.2 Using the PeekingDuck from the web interface
 ```bash
