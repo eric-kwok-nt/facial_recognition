@@ -1,11 +1,14 @@
 # PeekingDuckling
 ## 1. Description
-This is an implementation of facial identification algorithm to detect and identify the faces of the 3 members **Clarence**, **Eric Lee** and **Eric Kwok** from other detected faces.
+This is an implementation of facial identification algorithm to detect and identify the faces of the 3 team members **Clarence**, **Eric Lee** and **Eric Kwok** from other detected faces (**Others**).
 
 We will be using the [PeekingDuck](https://github.com/aimakerspace/PeekingDuck) framework for this mini project.
 
+### 1.1 Example
+![Face recognition example](./images/saved.gif)
+
 ## 2. Usage
-### 2.1 Running the PeekingDuck node directly
+### 2.1 Running the PeekingDuck nodes directly
 ```bash
 python -m src.runner
 ```
@@ -64,9 +67,14 @@ The test was conducted with the tuned threshold on the validation dataset, and t
 The authors would like to thank the mentor [Lee Ping](https://gitlab.aisingapore.net/ngleeping) for providing us with the technical suggestions as well as the inputs on the implementation of this project.
 
 **Authors:**
-* [Eric Kwok](https://gitlab.aisingapore.net/ngai_tung_kwok)
-* [Eric Lee](https://gitlab.aisingapore.net/hong_yeow_lee)
-* [Clarence Lam](https://gitlab.aisingapore.net/clarence_lam_wz)
+* [Eric Kwok](https://github.com/eric-kwok-nt) (Backend Facial Recognition)
+* [Eric Lee](https://gitlab.aisingapore.net/hong_yeow_lee) (Implementation of PeekingDuck framework)
+* [Clarence Lam](https://github.com/clarevoyance) (Frontend web interface)
+
+**References** _(Non exhausive)_
+* [PeekingDuck](https://github.com/aimakerspace/PeekingDuck)
+* [How to Perform Face Detection with Deep Learning](https://machinelearningmastery.com/how-to-perform-face-detection-with-classical-and-deep-learning-methods-in-python-with-keras/)
+
 
 
 
