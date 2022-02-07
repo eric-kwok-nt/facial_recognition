@@ -108,7 +108,7 @@ venv.bak/
 
 # Other likely dirs that should not be committed
 data/
-model/
-models/
+/model/
+/models/
 
 .polyaxon/
